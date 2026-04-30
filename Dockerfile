@@ -23,20 +23,17 @@ RUN pip install \
 # xformers (torch 2.6 + cu124 매칭)
 RUN pip install xformers==0.0.29.post3 --index-url https://download.pytorch.org/whl/cu124
 
-# 학습 의존성
-RUN pip install \
-    ipykernel==6.29.5 \
-    unsloth==2025.3.19 \
-    gdown==5.2.0 \
-    huggingface_hub==0.36.2 \
-    transformers==4.51.3 \
-    peft==0.13.2 \
-    accelerate==0.34.0 \
-    bitsandbytes \
-    protobuf==3.20.3
-
-# unsloth와 호환 안 되는 torchao 제거 (노트북 cell-3와 동일 처리)
+# 노트북 cell-3와 동일한 순서로 한 줄씩 — 한 번에 묶으면 의존성 해석 충돌
+RUN pip install ipykernel==6.29.5
+RUN pip install unsloth==2025.3.19
+RUN pip install gdown==5.2.0
+RUN pip install huggingface_hub==0.36.2
 RUN pip uninstall -y torchao || true
+RUN pip install transformers==4.51.3
+RUN pip install peft==0.13.2
+RUN pip install accelerate==0.34.0
+RUN pip install bitsandbytes
+RUN pip install protobuf==3.20.3
 
 # papermill / nbconvert (Run에서 노트북 실행)
 RUN pip install papermill jupyter nbconvert
