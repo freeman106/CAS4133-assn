@@ -38,4 +38,9 @@ RUN pip install protobuf==3.20.3
 # papermill / nbconvert (Run에서 노트북 실행)
 RUN pip install papermill jupyter nbconvert
 
+# triton JIT 빌드용 Python.h 헤더 + gcc 도구 (별도 layer로 추가해 cache 보존)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3.10-dev build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /workspace
